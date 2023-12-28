@@ -1,5 +1,7 @@
 {:paths ["src" "resources"]
- :deps {com.datomic/dev-local {:mvn/version "1.0.243"}
+ :deps {;com.datomic/dev-local {:mvn/version "1.0.243"}
+        ;com.datomic/local    {:mvn/version "1.0.267"} ; https://docs.datomic.com/cloud/datomic-local.html#267
+        com.datomic/local    {:mvn/version "1.0.276"} ; https://docs.datomic.com/cloud/datomic-local.html#267
         com.google.guava/guava {:mvn/version "31.1-jre"} ; fix conflict - datomic cloud & shadow
         com.hyperfiddle/electric {:mvn/version "v2-alpha-469-gb6d9865c"}
         com.hyperfiddle/rcf {:mvn/version "20220926-202227"}

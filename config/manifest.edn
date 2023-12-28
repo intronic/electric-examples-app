@@ -1,0 +1,5 @@
+{:client-cfg {:server-type :dev-local
+              :system      "datomic-samples"}
+ :db-name "mbrainz-1968-1973"
+ :basedir "subsets"
+ :concurrency 3}

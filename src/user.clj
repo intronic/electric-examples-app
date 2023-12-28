@@ -15,7 +15,7 @@
 ; Server-side Electric userland code is lazy loaded by the shadow build.
 ; WARNING: make sure your REPL and shadow-cljs are sharing the same JVM!
 
-(def electric-server-config 
+(def electric-server-config
   {:host "0.0.0.0", :port 8080, :resources-path "public", :manifest-path "public/js/manifest.edn"})
 
 (defn rcf-shadow-hook {:shadow.build/stages #{:compile-prepare :compile-finish}}
@@ -29,6 +29,9 @@
                                   :compile-prepare (@rcf-enable! false)
                                   :compile-finish (@rcf-enable!))
                                 build-state))))
+
+;; (def DB-NAME "mbrainz-subset")
+(def DB-NAME "mbrainz-1968-1973")
 
 (defn main [& args]
   (println "Starting Electric compiler and server...")
@@ -48,7 +51,7 @@
     (def datomic-config {:server-type :dev-local :system "datomic-samples"})
     ;; install prod globals
     (def datomic-client (eval '(d/client datomic-config)))
-    (def datomic-conn (m/? (eval '(d/connect datomic-client {:db-name "mbrainz-subset"}))))
+    (def datomic-conn (m/? (eval '(d/connect datomic-client {:db-name DB-NAME}))))
 
     ;; install test globals, which are different
     (require 'test)

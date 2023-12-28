@@ -1,11 +1,12 @@
 (ns test
-  (:require [contrib.datomic-contrib :as dx]
+  (:require [clojure.pprint :as pprint]
+            [contrib.datomic-contrib :as dx]
             [contrib.datomic-m :as d]
-            [missionary.core :as m]
             [hyperfiddle.rcf :refer [tests]]
+            [missionary.core :as m]
             test.mbrainz
-            test.seattle
-            test.person-model))
+            test.person-model
+            test.seattle))
 
 (def ^:dynamic datomic-client)
 (def ^:dynamic datomic-conn)
@@ -16,15 +17,19 @@
 (def pour-lamour 87960930235113)
 (def cobblestone 536561674378709)
 
+;; (def DB-NAME "mbrainz-subset")
+(def DB-NAME "mbrainz-1968-1973")
+
 (def datomic-config {:server-type :dev-local :system "datomic-samples"})
 
 (defn install-test-state []
   (alter-var-root #'datomic-client (constantly (d/client datomic-config)))
   (assert (some? datomic-client))
 
-  (alter-var-root #'datomic-conn (constantly (m/? (d/connect datomic-client {:db-name "mbrainz-subset"}))))
+  (pprint/pprint "> connecting to " DB-NAME)
+  (alter-var-root #'datomic-conn (constantly (m/? (d/connect datomic-client {:db-name DB-NAME}))))
+  (pprint/pprint datomic-conn)
   (assert (some? datomic-conn))
-
   (alter-var-root #'datomic-db (constantly (:db-after (m/? (d/with (m/? (d/with-db datomic-conn)) fixtures)))))
   (assert (some? datomic-db))
 
